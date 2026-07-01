@@ -19,19 +19,19 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
   const btnBase = 'w-8 h-8 flex items-center justify-center rounded-lg text-sm transition-colors';
 
   return (
-    <div className="bg-white border-x border-b border-gray-200 rounded-b-xl px-5 py-3 flex items-center justify-between">
-      <span className="text-sm text-gray-400">
+    <div className="bg-white dark:bg-gray-800 border-x border-b border-gray-200 dark:border-gray-700 rounded-b-xl px-5 py-3 flex items-center justify-between">
+      <span className="text-sm text-gray-400 dark:text-gray-500">
         Page{' '}
-        <span className="font-semibold text-gray-600">{currentPage}</span>
+        <span className="font-semibold text-gray-600 dark:text-gray-300">{currentPage}</span>
         {' '}of{' '}
-        <span className="font-semibold text-gray-600">{totalPages}</span>
+        <span className="font-semibold text-gray-600 dark:text-gray-300">{totalPages}</span>
       </span>
 
       <div className="flex items-center gap-1">
         <button
           onClick={onPrevious}
           disabled={currentPage === 1}
-          className={`${btnBase} border border-gray-200 text-gray-400 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed`}
+          className={`${btnBase} border border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed`}
           aria-label="Previous page"
         >
           <ChevronLeft size={15} />
@@ -39,7 +39,7 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
 
         {getPageNumbers().map((page, idx) =>
           page === '...' ? (
-            <span key={`e-${idx}`} className="w-8 h-8 flex items-center justify-center text-gray-300 text-sm select-none">
+            <span key={`e-${idx}`} className="w-8 h-8 flex items-center justify-center text-gray-300 dark:text-gray-600 text-sm select-none">
               …
             </span>
           ) : (
@@ -49,7 +49,7 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
               className={`${btnBase} font-medium ${
                 currentPage === page
                   ? 'bg-blue-600 text-white shadow-sm'
-                  : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
+                  : 'border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
               }`}
             >
               {page}
@@ -60,7 +60,7 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
         <button
           onClick={onNext}
           disabled={currentPage === totalPages}
-          className={`${btnBase} border border-gray-200 text-gray-400 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed`}
+          className={`${btnBase} border border-gray-200 dark:border-gray-600 text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30 disabled:cursor-not-allowed`}
           aria-label="Next page"
         >
           <ChevronRight size={15} />

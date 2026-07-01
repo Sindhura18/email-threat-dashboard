@@ -21,8 +21,8 @@ const ThreatSummaryCards = ({ emails }) => {
             {label}
           </div>
           <div className={`text-3xl font-bold ${text} mb-1`}>{count}</div>
-          <div className="text-xs text-gray-400 mb-2">{pct}% of total</div>
-          <div className="h-1.5 bg-white bg-opacity-60 rounded-full overflow-hidden">
+          <div className="text-xs text-gray-400 dark:text-gray-500 mb-2">{pct}% of total</div>
+          <div className="h-1.5 bg-white/50 dark:bg-gray-700/40 rounded-full overflow-hidden">
             <div className={`h-full ${bar} rounded-full transition-all duration-500`} style={{ width: `${pct}%` }} />
           </div>
         </div>
