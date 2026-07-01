@@ -1,10 +1,13 @@
 # Email Threat Protection Dashboard
 
-A modern React-based email threat monitoring dashboard for analyzing and managing email security threats. Built with React 18, Tailwind CSS, and Lucide React icons.
+[![React](https://img.shields.io/badge/React-18.3.1-61DAFB?logo=react&logoColor=white)](https://reactjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.x-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-![Email Threat Protection Dashboard]
+A modern, production-ready React dashboard for monitoring and analysing email security threats. Features real-time search, advanced filters, paginated threat feeds, and a visual statistics overview — all powered by mock data out of the box, with a clean API integration path.
 
-## 🚀 Features
+## Features
 
 - **📧 Email List View** - Display emails with comprehensive threat information
 - **🔍 Real-time Search** - Search across subject, sender, threat type, classifier, and taxonomy
