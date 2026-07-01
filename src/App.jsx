@@ -140,6 +140,8 @@ const App = () => {
     setDetailLoading(false);
   };
 
+  // Runs once on mount — pageSize changes are handled by handlePageSizeChange
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     fetchEmails(1, pageSize);
   }, []);
