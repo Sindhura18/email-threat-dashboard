@@ -1,6 +1,25 @@
 import React from "react";
 import { RefreshCw, X, ArrowLeft } from "lucide-react";
-import { getTaxonomyColor, formatDate } from "../utils/helpers";
+import { getTaxonomyColor, getThreatTypeLabel, getThreatTypeBadgeColor, getThreatScoreColor, formatDate } from "../utils/helpers";
+
+const ScoreBar = ({ score }) => {
+  if (score === null || score === undefined) return null;
+  const pct = Math.round(score * 100);
+  return (
+    <div>
+      <label className="text-sm font-medium text-gray-500">Threat Score</label>
+      <div className="mt-2 flex items-center gap-3">
+        <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
+          <div
+            className={`h-full rounded-full ${getThreatScoreColor(score)}`}
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+        <span className="text-sm font-semibold text-gray-700 w-10 text-right">{pct}%</span>
+      </div>
+    </div>
+  );
+};
 
 const EmailDetailModal = ({ email, onClose, loading }) => {
   const DetailField = ({ label, value, breakAll = false }) => (
@@ -81,12 +100,13 @@ const EmailDetailModal = ({ email, onClose, loading }) => {
 
               {/* Badges */}
               <div className="flex flex-wrap gap-2">
-                <div className="px-3 py-1.5 rounded bg-blue-50 text-blue-700 border border-blue-300 text-sm font-medium">
+                <div className={`px-3 py-1.5 rounded text-sm font-semibold border ${getThreatTypeBadgeColor(email.threat_type)}`}>
+                  {email.threat_type} · {getThreatTypeLabel(email.threat_type)}
+                </div>
+                <div className="px-3 py-1.5 rounded bg-blue-50 text-blue-700 border border-blue-200 text-sm font-medium">
                   {email.classifier || "N/A"}
                 </div>
-                <div
-                  className={`px-3 py-1.5 rounded text-sm font-medium border ${getTaxonomyColor(email.taxonomy)}`}
-                >
+                <div className={`px-3 py-1.5 rounded text-sm font-medium border ${getTaxonomyColor(email.taxonomy)}`}>
                   {email.taxonomy || "N/A"}
                 </div>
               </div>
@@ -118,10 +138,7 @@ const EmailDetailModal = ({ email, onClose, loading }) => {
                 />
                 <DetailField label="Classifier" value={email.classifier} />
                 <DetailField label="Taxonomy" value={email.taxonomy} />
-                <DetailField
-                  label="Score"
-                  value={email.score !== null ? email.score : "N/A"}
-                />
+                <ScoreBar score={email.score} />
                 <DetailField
                   label="Created On"
                   value={formatDate(email.created_on)}
