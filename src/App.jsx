@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Search, RefreshCw, Filter, X } from "lucide-react";
 import EmailDetailModal from "./components/EmailDetailModal";
 import EmailListItem from "./components/EmailListItem";
+import ThreatSummaryCards from "./components/ThreatSummaryCards";
 import { LoadingState, ErrorState, EmptyState } from "./utils/uiStates";
 import StatisticsFooter from "./components/StatisticsFooter";
 import Pagination from "./components/Pagination";
@@ -53,33 +54,22 @@ const App = () => {
     "clean_email",
   ];
 
-  // Mock data fetch with filtering and pagination
-  const fetchMockEmails = (page = 1, size = pageSize) => {
+  // Mock data fetch — accepts explicit filter params to avoid stale-closure bugs
+  const fetchMockEmails = (page = 1, size = pageSize, ttf = threatTypeFilter, cf = classifierFilter, txf = taxonomyFilter) => {
     setLoading(true);
     setError(null);
 
     setTimeout(() => {
       let filtered = [...mockEmails];
 
-      if (threatTypeFilter) {
-        filtered = filtered.filter((e) =>
-          e.threat_type?.includes(threatTypeFilter),
-        );
-      }
-      if (classifierFilter) {
-        filtered = filtered.filter((e) =>
-          e.classifier?.includes(classifierFilter),
-        );
-      }
-      if (taxonomyFilter) {
-        filtered = filtered.filter((e) => e.taxonomy?.includes(taxonomyFilter));
-      }
+      if (ttf) filtered = filtered.filter((e) => e.threat_type?.includes(ttf));
+      if (cf)  filtered = filtered.filter((e) => e.classifier?.includes(cf));
+      if (txf) filtered = filtered.filter((e) => e.taxonomy?.includes(txf));
 
       const totalFiltered = filtered.length;
       const startIndex = (page - 1) * size;
-      const paginatedEmails = filtered.slice(startIndex, startIndex + size);
 
-      setEmails(paginatedEmails);
+      setEmails(filtered.slice(startIndex, startIndex + size));
       setTotalCount(totalFiltered);
       setCurrentPage(page);
       setTotalPages(Math.ceil(totalFiltered / size));
@@ -88,9 +78,9 @@ const App = () => {
   };
 
   // Real API fetch
-  const fetchEmails = async (page = 1, size = pageSize) => {
+  const fetchEmails = async (page = 1, size = pageSize, ttf = threatTypeFilter, cf = classifierFilter, txf = taxonomyFilter) => {
     if (USE_MOCK_DATA) {
-      fetchMockEmails(page, size);
+      fetchMockEmails(page, size, ttf, cf, txf);
       return;
     }
 
@@ -99,12 +89,9 @@ const App = () => {
 
     try {
       let queryParams = `?page=${page}&page_size=${size}`;
-      if (threatTypeFilter)
-        queryParams += `&threat_type__contains=${threatTypeFilter}`;
-      if (classifierFilter)
-        queryParams += `&classifier__contains=${classifierFilter}`;
-      if (taxonomyFilter)
-        queryParams += `&taxonomy__contains=${taxonomyFilter}`;
+      if (ttf) queryParams += `&threat_type__contains=${ttf}`;
+      if (cf)  queryParams += `&classifier__contains=${cf}`;
+      if (txf) queryParams += `&taxonomy__contains=${txf}`;
 
       const response = await fetch(
         API_BASE_URL + API_ENDPOINTS.threats + queryParams,
@@ -189,24 +176,23 @@ const App = () => {
     setClassifierFilter("");
     setTaxonomyFilter("");
     setCurrentPage(1);
-    fetchEmails(1, pageSize);
+    fetchEmails(1, pageSize, "", "", "");
   };
 
   const hasActiveFilters =
     threatTypeFilter || classifierFilter || taxonomyFilter;
 
-  // Client-side search filter
-  const filteredEmails = emails.filter((email) => {
-    if (!searchQuery) return true;
+  const filteredEmails = useMemo(() => {
+    if (!searchQuery) return emails;
     const q = searchQuery.toLowerCase();
-    return (
+    return emails.filter((email) =>
       (email.subject && email.subject.toLowerCase().includes(q)) ||
       (email.sender_domain && email.sender_domain.toLowerCase().includes(q)) ||
       (email.threat_type && email.threat_type.toLowerCase().includes(q)) ||
       (email.classifier && email.classifier.toLowerCase().includes(q)) ||
       (email.taxonomy && email.taxonomy.toLowerCase().includes(q))
     );
-  });
+  }, [emails, searchQuery]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -426,6 +412,8 @@ const App = () => {
 
       {/* Email List */}
       <div className="max-w-7xl mx-auto px-6 py-4">
+        <ThreatSummaryCards emails={USE_MOCK_DATA ? mockEmails : emails} />
+
         {loading && <LoadingState />}
 
         {error && <ErrorState error={error} apiUrl={API_BASE_URL} />}
