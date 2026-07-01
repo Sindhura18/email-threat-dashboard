@@ -1,98 +1,70 @@
-import React from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import React from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const Pagination = ({
-  currentPage,
-  totalPages,
-  totalCount,
-  onPageChange,
-  onPrevious,
-  onNext,
-}) => {
+const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevious, onNext }) => {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
-
     let startPage = Math.max(1, currentPage - Math.floor(maxPagesToShow / 2));
     let endPage = Math.min(totalPages, startPage + maxPagesToShow - 1);
+    if (endPage - startPage < maxPagesToShow - 1) startPage = Math.max(1, endPage - maxPagesToShow + 1);
 
-    if (endPage - startPage < maxPagesToShow - 1) {
-      startPage = Math.max(1, endPage - maxPagesToShow + 1);
-    }
-
-    if (startPage > 1) {
-      pages.push(1);
-      if (startPage > 2) pages.push("...");
-    }
-
-    for (let i = startPage; i <= endPage; i++) {
-      pages.push(i);
-    }
-
-    if (endPage < totalPages) {
-      if (endPage < totalPages - 1) pages.push("...");
-      pages.push(totalPages);
-    }
+    if (startPage > 1) { pages.push(1); if (startPage > 2) pages.push('...'); }
+    for (let i = startPage; i <= endPage; i++) pages.push(i);
+    if (endPage < totalPages) { if (endPage < totalPages - 1) pages.push('...'); pages.push(totalPages); }
 
     return pages;
   };
 
+  const btnBase = 'w-8 h-8 flex items-center justify-center rounded-lg text-sm transition-colors';
+
   return (
-    <div className="mt-4 bg-white border border-gray-200 rounded-lg px-6 py-4">
-      <div className="flex items-center justify-between">
-        {/* Page Info */}
-        <div className="text-sm text-gray-600">
-          Page {currentPage} of {totalPages} ({totalCount} total emails)
-        </div>
+    <div className="bg-white border-x border-b border-gray-200 rounded-b-xl px-5 py-3 flex items-center justify-between">
+      <span className="text-sm text-gray-400">
+        Page{' '}
+        <span className="font-semibold text-gray-600">{currentPage}</span>
+        {' '}of{' '}
+        <span className="font-semibold text-gray-600">{totalPages}</span>
+      </span>
 
-        {/* Pagination Controls */}
-        <div className="flex items-center gap-2">
-          {/* Previous */}
-          <button
-            onClick={onPrevious}
-            disabled={currentPage === 1}
-            className="p-2 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            aria-label="Previous page"
-          >
-            <ChevronLeft size={20} />
-          </button>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={onPrevious}
+          disabled={currentPage === 1}
+          className={`${btnBase} border border-gray-200 text-gray-400 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed`}
+          aria-label="Previous page"
+        >
+          <ChevronLeft size={15} />
+        </button>
 
-          {/* Page Numbers */}
-          <div className="flex items-center gap-1">
-            {getPageNumbers().map((page, index) =>
-              page === "..." ? (
-                <span
-                  key={`ellipsis-${index}`}
-                  className="px-3 py-2 text-gray-500"
-                >
-                  ...
-                </span>
-              ) : (
-                <button
-                  key={page}
-                  onClick={() => onPageChange(page)}
-                  className={`px-3 py-2 rounded transition-colors ${
-                    currentPage === page
-                      ? "bg-blue-600 text-white font-medium"
-                      : "border border-gray-300 hover:bg-gray-50 text-gray-700"
-                  }`}
-                >
-                  {page}
-                </button>
-              ),
-            )}
-          </div>
+        {getPageNumbers().map((page, idx) =>
+          page === '...' ? (
+            <span key={`e-${idx}`} className="w-8 h-8 flex items-center justify-center text-gray-300 text-sm select-none">
+              …
+            </span>
+          ) : (
+            <button
+              key={page}
+              onClick={() => onPageChange(page)}
+              className={`${btnBase} font-medium ${
+                currentPage === page
+                  ? 'bg-blue-600 text-white shadow-sm'
+                  : 'border border-gray-200 text-gray-600 hover:bg-gray-50'
+              }`}
+            >
+              {page}
+            </button>
+          )
+        )}
 
-          {/* Next */}
-          <button
-            onClick={onNext}
-            disabled={currentPage === totalPages}
-            className="p-2 border border-gray-300 rounded hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            aria-label="Next page"
-          >
-            <ChevronRight size={20} />
-          </button>
-        </div>
+        <button
+          onClick={onNext}
+          disabled={currentPage === totalPages}
+          className={`${btnBase} border border-gray-200 text-gray-400 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed`}
+          aria-label="Next page"
+        >
+          <ChevronRight size={15} />
+        </button>
       </div>
     </div>
   );

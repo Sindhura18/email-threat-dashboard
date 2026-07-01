@@ -418,17 +418,17 @@ const App = () => {
             <StatisticsFooter
               emails={filteredEmails}
               totalEmails={totalCount}
+              currentPage={currentPage}
+              pageSize={pageSize}
             />
-            {totalPages > 1 && (
-              <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                totalCount={totalCount}
-                onPageChange={handlePageClick}
-                onPrevious={handlePrevPage}
-                onNext={handleNextPage}
-              />
-            )}
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              totalCount={totalCount}
+              onPageChange={handlePageClick}
+              onPrevious={handlePrevPage}
+              onNext={handleNextPage}
+            />
           </>
         )}
       </div>
