@@ -1,7 +1,14 @@
-import React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevious, onNext }) => {
+const Pagination = ({
+  currentPage,
+  totalPages,
+  totalCount,
+  onPageChange,
+  onPrevious,
+  onNext,
+}) => {
   const getPageNumbers = () => {
     const pages = [];
     const maxPagesToShow = 5;
@@ -15,7 +22,7 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
 
     if (startPage > 1) {
       pages.push(1);
-      if (startPage > 2) pages.push('...');
+      if (startPage > 2) pages.push("...");
     }
 
     for (let i = startPage; i <= endPage; i++) {
@@ -23,7 +30,7 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
     }
 
     if (endPage < totalPages) {
-      if (endPage < totalPages - 1) pages.push('...');
+      if (endPage < totalPages - 1) pages.push("...");
       pages.push(totalPages);
     }
 
@@ -53,8 +60,11 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
           {/* Page Numbers */}
           <div className="flex items-center gap-1">
             {getPageNumbers().map((page, index) =>
-              page === '...' ? (
-                <span key={`ellipsis-${index}`} className="px-3 py-2 text-gray-500">
+              page === "..." ? (
+                <span
+                  key={`ellipsis-${index}`}
+                  className="px-3 py-2 text-gray-500"
+                >
                   ...
                 </span>
               ) : (
@@ -63,13 +73,13 @@ const Pagination = ({ currentPage, totalPages, totalCount, onPageChange, onPrevi
                   onClick={() => onPageChange(page)}
                   className={`px-3 py-2 rounded transition-colors ${
                     currentPage === page
-                      ? 'bg-blue-600 text-white font-medium'
-                      : 'border border-gray-300 hover:bg-gray-50 text-gray-700'
+                      ? "bg-blue-600 text-white font-medium"
+                      : "border border-gray-300 hover:bg-gray-50 text-gray-700"
                   }`}
                 >
                   {page}
                 </button>
-              )
+              ),
             )}
           </div>
 

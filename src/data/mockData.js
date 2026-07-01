@@ -11,7 +11,7 @@ export const mockEmails = [
     subject: "Urgent: Claim Your Free Prize Now!",
     body: "Congratulations! You have been selected as a winner. Click the link below to claim your prize immediately. This offer expires in 24 hours.",
     sender_domain: "free-prizes.net",
-    internet_message_id: "msg001@spam-domain.com"
+    internet_message_id: "msg001@spam-domain.com",
   },
   {
     id: 2,
@@ -25,7 +25,7 @@ export const mockEmails = [
     subject: "Your Account Has Been Suspended",
     body: "We have detected suspicious activity on your account. Please verify your credentials immediately by clicking the link below to avoid permanent suspension.",
     sender_domain: "secure-login-verify.com",
-    internet_message_id: "msg002@phishing-domain.com"
+    internet_message_id: "msg002@phishing-domain.com",
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ export const mockEmails = [
     subject: "Invoice #45231 - Payment Required",
     body: "Please find attached your invoice for this month. Download and open the attached file to review the payment details. Payment is due within 7 days.",
     sender_domain: "billing-invoices.net",
-    internet_message_id: "msg003@malware-domain.com"
+    internet_message_id: "msg003@malware-domain.com",
   },
   {
     id: 4,
@@ -53,7 +53,7 @@ export const mockEmails = [
     subject: "Urgent Wire Transfer Needed",
     body: "Hi, this is the CEO. I need you to process an urgent wire transfer of $50,000 to our overseas supplier. Please handle this immediately and keep it confidential.",
     sender_domain: "company-ceo-mail.com",
-    internet_message_id: "msg004@impersonation-domain.com"
+    internet_message_id: "msg004@impersonation-domain.com",
   },
   {
     id: 5,
@@ -67,7 +67,7 @@ export const mockEmails = [
     subject: "Team Meeting - Q4 Review Agenda",
     body: "Hi Team, please find below the agenda for our Q4 review meeting scheduled for tomorrow at 2PM. Let me know if you have any items to add.",
     sender_domain: "company.com",
-    internet_message_id: "msg005@company.com"
+    internet_message_id: "msg005@company.com",
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ export const mockEmails = [
     subject: "Limited Time Offer - 90% OFF Everything!",
     body: "Amazing deals! Get 90% off on all premium products. Click now before this offer expires in 6 hours. Free shipping worldwide on all orders!",
     sender_domain: "mega-deals-store.com",
-    internet_message_id: "msg006@spam-domain.com"
+    internet_message_id: "msg006@spam-domain.com",
   },
   {
     id: 7,
@@ -95,7 +95,7 @@ export const mockEmails = [
     subject: "Your Package Delivery Failed - Action Required",
     body: "Your package could not be delivered due to an incomplete address. Please update your delivery information and pay a $2.99 redelivery fee to release your package.",
     sender_domain: "delivery-updates-portal.com",
-    internet_message_id: "msg007@phishing-domain.com"
+    internet_message_id: "msg007@phishing-domain.com",
   },
   {
     id: 8,
@@ -109,7 +109,7 @@ export const mockEmails = [
     subject: "Project Update - Website Redesign",
     body: "Hi Team, I wanted to share the latest progress on our website redesign project. The new mockups are ready for review. Please share your feedback by Friday.",
     sender_domain: "company.com",
-    internet_message_id: "msg008@company.com"
+    internet_message_id: "msg008@company.com",
   },
   {
     id: 9,
@@ -123,7 +123,7 @@ export const mockEmails = [
     subject: "Critical System Update Required",
     body: "Your system requires an urgent security patch. Please download and run the attached update file immediately to protect against the latest vulnerabilities.",
     sender_domain: "system-updates-portal.net",
-    internet_message_id: "msg009@malware-domain.com"
+    internet_message_id: "msg009@malware-domain.com",
   },
   {
     id: 10,
@@ -131,13 +131,13 @@ export const mockEmails = [
     threat_type: "IM",
     classifier: "executive_impersonation",
     taxonomy: "businessEmailSpoofing",
-    score: 0.90,
+    score: 0.9,
     imported_at: "2024-11-30T09:00:00.029000Z",
     created_on: "2024-12-02T09:00:00.000000Z",
     subject: "Confidential - Financial Report Needed",
     body: "This is the CFO. I need you to send me the Q3 financial statements right away. I'm currently in a board meeting and cannot take calls. Reply immediately.",
     sender_domain: "cfo-secure-mail.com",
-    internet_message_id: "msg010@spoofing-domain.com"
+    internet_message_id: "msg010@spoofing-domain.com",
   },
   {
     id: 11,
@@ -151,7 +151,7 @@ export const mockEmails = [
     subject: "You Have Been Selected for Our Survey",
     body: "You have been specially selected to participate in our customer survey. Complete it now and receive a $500 gift card as a thank you for your time.",
     sender_domain: "survey-rewards-center.com",
-    internet_message_id: "msg011@spam-domain.com"
+    internet_message_id: "msg011@spam-domain.com",
   },
   {
     id: 12,
@@ -165,7 +165,7 @@ export const mockEmails = [
     subject: "Security Alert: Unusual Sign-in Activity",
     body: "We detected an unusual sign-in attempt to your account from a new device. If this was not you, please secure your account immediately by clicking the link below.",
     sender_domain: "account-security-alert.com",
-    internet_message_id: "msg012@phishing-domain.com"
+    internet_message_id: "msg012@phishing-domain.com",
   },
   {
     id: 13,
@@ -179,7 +179,7 @@ export const mockEmails = [
     subject: "HR: Annual Benefits Enrollment Open",
     body: "Dear Team, the annual benefits enrollment period is now open. Please log into the HR portal to review and update your benefits selections before the December 15th deadline.",
     sender_domain: "company.com",
-    internet_message_id: "msg013@company.com"
+    internet_message_id: "msg013@company.com",
   },
   {
     id: 14,
@@ -193,7 +193,7 @@ export const mockEmails = [
     subject: "Your Document is Ready to View",
     body: "A document has been shared with you. Click the link below or open the attached file to view it. The document will expire in 48 hours.",
     sender_domain: "docs-shared-portal.net",
-    internet_message_id: "msg014@malware-domain.com"
+    internet_message_id: "msg014@malware-domain.com",
   },
   {
     id: 15,
@@ -207,7 +207,7 @@ export const mockEmails = [
     subject: "Action Required: Vendor Payment",
     body: "Hi, I need you to process a payment for a new vendor we are working with. The amount is $25,000. Please do this before end of day. Do not discuss with others.",
     sender_domain: "ceo-payments.com",
-    internet_message_id: "msg015@impersonation-domain.com"
+    internet_message_id: "msg015@impersonation-domain.com",
   },
   {
     id: 16,
@@ -221,7 +221,7 @@ export const mockEmails = [
     subject: "Lose 30 Pounds in 30 Days!",
     body: "Discover the secret doctors do not want you to know! Our revolutionary supplement helps you lose weight fast without diet or exercise. Order now and get 50% off!",
     sender_domain: "miracle-weight-loss.com",
-    internet_message_id: "msg016@spam-domain.com"
+    internet_message_id: "msg016@spam-domain.com",
   },
   {
     id: 17,
@@ -235,7 +235,7 @@ export const mockEmails = [
     subject: "IT: Scheduled System Maintenance",
     body: "Please be advised that scheduled system maintenance will take place this Saturday from 10PM to 2AM. Some services may be unavailable during this time. We apologize for the inconvenience.",
     sender_domain: "company.com",
-    internet_message_id: "msg017@company.com"
+    internet_message_id: "msg017@company.com",
   },
   {
     id: 18,
@@ -249,7 +249,7 @@ export const mockEmails = [
     subject: "Your Online Banking Access Has Been Limited",
     body: "Your online banking access has been limited due to multiple failed login attempts. Click the link below to verify your identity and restore access to your account.",
     sender_domain: "banking-secure-verify.com",
-    internet_message_id: "msg018@phishing-domain.com"
+    internet_message_id: "msg018@phishing-domain.com",
   },
   {
     id: 19,
@@ -263,7 +263,7 @@ export const mockEmails = [
     subject: "Purchase Order Confirmation",
     body: "Thank you for your recent purchase. Please open the attached file to view your purchase order confirmation and invoice details.",
     sender_domain: "purchase-orders-confirm.net",
-    internet_message_id: "msg019@malware-domain.com"
+    internet_message_id: "msg019@malware-domain.com",
   },
   {
     id: 20,
@@ -277,7 +277,7 @@ export const mockEmails = [
     subject: "Weekly Team Standup - Meeting Notes",
     body: "Hi everyone, please find below the notes from today's standup meeting. Action items and owners are highlighted. Next meeting is scheduled for Monday at 10AM.",
     sender_domain: "company.com",
-    internet_message_id: "msg020@company.com"
+    internet_message_id: "msg020@company.com",
   },
   {
     id: 21,
@@ -285,13 +285,13 @@ export const mockEmails = [
     threat_type: "SP",
     classifier: "content_intent_attack",
     taxonomy: "spam",
-    score: 0.80,
+    score: 0.8,
     imported_at: "2024-11-24T14:00:00.029000Z",
     created_on: "2024-11-26T14:00:00.000000Z",
     subject: "Make $5000 Per Week Working From Home",
     body: "Start earning $5000 a week from the comfort of your home! No experience required. Limited spots available. Click here to get started today!",
     sender_domain: "work-from-home-jobs.net",
-    internet_message_id: "msg021@spam-domain.com"
+    internet_message_id: "msg021@spam-domain.com",
   },
   {
     id: 22,
@@ -305,7 +305,7 @@ export const mockEmails = [
     subject: "Gift Cards Needed Urgently",
     body: "I need you to buy 10 x $100 gift cards for a client appreciation event. Buy them and send me the codes. I will reimburse you later. This is urgent.",
     sender_domain: "director-mail-secure.com",
-    internet_message_id: "msg022@spoofing-domain.com"
+    internet_message_id: "msg022@spoofing-domain.com",
   },
   {
     id: 23,
@@ -319,7 +319,7 @@ export const mockEmails = [
     subject: "Your Cloud Storage is Full",
     body: "Your cloud storage is 100% full. Upgrade now to avoid losing your files. Click the link to upgrade your storage plan and keep your data safe.",
     sender_domain: "cloud-storage-upgrade.net",
-    internet_message_id: "msg023@phishing-domain.com"
+    internet_message_id: "msg023@phishing-domain.com",
   },
   {
     id: 24,
@@ -333,7 +333,7 @@ export const mockEmails = [
     subject: "New Employee Onboarding - Welcome!",
     body: "Welcome to the team! We are excited to have you on board. Please review the attached onboarding guide and complete the required training modules in the HR portal.",
     sender_domain: "company.com",
-    internet_message_id: "msg024@company.com"
+    internet_message_id: "msg024@company.com",
   },
   {
     id: 25,
@@ -347,6 +347,6 @@ export const mockEmails = [
     subject: "Shared File Notification",
     body: "A file has been shared with you by a colleague. Click the link below to view and download the shared file. Access expires in 24 hours.",
     sender_domain: "file-share-notify.net",
-    internet_message_id: "msg025@malware-domain.com"
-  }
+    internet_message_id: "msg025@malware-domain.com",
+  },
 ];

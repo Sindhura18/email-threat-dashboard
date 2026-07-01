@@ -1,5 +1,5 @@
-import React from 'react';
-import { RefreshCw } from 'lucide-react';
+import React from "react";
+import { RefreshCw } from "lucide-react";
 
 export const LoadingState = () => (
   <div className="flex flex-col items-center justify-center py-16">

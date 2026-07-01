@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Search, RefreshCw, Filter, X } from 'lucide-react';
-import EmailDetailModal from './components/EmailDetailModal';
-import EmailListItem from './components/EmailListItem';
-import { LoadingState, ErrorState, EmptyState } from './utils/uiStates';
-import StatisticsFooter from './components/StatisticsFooter';
-import Pagination from './components/Pagination';
-import { mockEmails } from './data/mockData';
+import React, { useState, useEffect } from "react";
+import { Search, RefreshCw, Filter, X } from "lucide-react";
+import EmailDetailModal from "./components/EmailDetailModal";
+import EmailListItem from "./components/EmailListItem";
+import { LoadingState, ErrorState, EmptyState } from "./utils/uiStates";
+import StatisticsFooter from "./components/StatisticsFooter";
+import Pagination from "./components/Pagination";
+import { mockEmails } from "./data/mockData";
 
 // Toggle this to switch between mock data and real API
 const USE_MOCK_DATA = true;
 
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:8000";
 const API_ENDPOINTS = {
-  threats: '/api/threats/',
-  threatDetail: (id) => `/api/threats/${id}/`
+  threats: "/api/threats/",
+  threatDetail: (id) => `/api/threats/${id}/`,
 };
 
 const App = () => {
@@ -22,7 +22,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -31,26 +31,26 @@ const App = () => {
 
   // Filter states
   const [showFilters, setShowFilters] = useState(false);
-  const [threatTypeFilter, setThreatTypeFilter] = useState('');
-  const [classifierFilter, setClassifierFilter] = useState('');
-  const [taxonomyFilter, setTaxonomyFilter] = useState('');
+  const [threatTypeFilter, setThreatTypeFilter] = useState("");
+  const [classifierFilter, setClassifierFilter] = useState("");
+  const [taxonomyFilter, setTaxonomyFilter] = useState("");
 
   // Filter options
-  const threatTypes = ['SP', 'PH', 'MA', 'IM', 'CL'];
+  const threatTypes = ["SP", "PH", "MA", "IM", "CL"];
   const taxonomies = [
-    'businessEmailSpoofing',
-    'phishing',
-    'spam',
-    'malware',
-    'businessEmailImpersonation',
-    'legitimate'
+    "businessEmailSpoofing",
+    "phishing",
+    "spam",
+    "malware",
+    "businessEmailImpersonation",
+    "legitimate",
   ];
   const classifiers = [
-    'content_intent_attack',
-    'credential_harvesting',
-    'attachment_threat',
-    'executive_impersonation',
-    'clean_email'
+    "content_intent_attack",
+    "credential_harvesting",
+    "attachment_threat",
+    "executive_impersonation",
+    "clean_email",
   ];
 
   // Mock data fetch with filtering and pagination
@@ -62,13 +62,17 @@ const App = () => {
       let filtered = [...mockEmails];
 
       if (threatTypeFilter) {
-        filtered = filtered.filter(e => e.threat_type?.includes(threatTypeFilter));
+        filtered = filtered.filter((e) =>
+          e.threat_type?.includes(threatTypeFilter),
+        );
       }
       if (classifierFilter) {
-        filtered = filtered.filter(e => e.classifier?.includes(classifierFilter));
+        filtered = filtered.filter((e) =>
+          e.classifier?.includes(classifierFilter),
+        );
       }
       if (taxonomyFilter) {
-        filtered = filtered.filter(e => e.taxonomy?.includes(taxonomyFilter));
+        filtered = filtered.filter((e) => e.taxonomy?.includes(taxonomyFilter));
       }
 
       const totalFiltered = filtered.length;
@@ -95,11 +99,16 @@ const App = () => {
 
     try {
       let queryParams = `?page=${page}&page_size=${size}`;
-      if (threatTypeFilter) queryParams += `&threat_type__contains=${threatTypeFilter}`;
-      if (classifierFilter) queryParams += `&classifier__contains=${classifierFilter}`;
-      if (taxonomyFilter) queryParams += `&taxonomy__contains=${taxonomyFilter}`;
+      if (threatTypeFilter)
+        queryParams += `&threat_type__contains=${threatTypeFilter}`;
+      if (classifierFilter)
+        queryParams += `&classifier__contains=${classifierFilter}`;
+      if (taxonomyFilter)
+        queryParams += `&taxonomy__contains=${taxonomyFilter}`;
 
-      const response = await fetch(API_BASE_URL + API_ENDPOINTS.threats + queryParams);
+      const response = await fetch(
+        API_BASE_URL + API_ENDPOINTS.threats + queryParams,
+      );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
 
@@ -110,7 +119,7 @@ const App = () => {
       setTotalPages(Math.ceil((data.count || 0) / size));
     } catch (err) {
       setError(`Error fetching emails: ${err.message}`);
-      console.error('Error fetching emails:', err);
+      console.error("Error fetching emails:", err);
     }
 
     setLoading(false);
@@ -122,7 +131,7 @@ const App = () => {
 
     if (USE_MOCK_DATA) {
       setTimeout(() => {
-        const email = mockEmails.find(e => e.id === emailId);
+        const email = mockEmails.find((e) => e.id === emailId);
         setSelectedEmail(email || null);
         setDetailLoading(false);
       }, 300);
@@ -130,12 +139,14 @@ const App = () => {
     }
 
     try {
-      const response = await fetch(API_BASE_URL + API_ENDPOINTS.threatDetail(emailId));
+      const response = await fetch(
+        API_BASE_URL + API_ENDPOINTS.threatDetail(emailId),
+      );
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const data = await response.json();
       setSelectedEmail(data);
     } catch (err) {
-      console.error('Error fetching email details:', err);
+      console.error("Error fetching email details:", err);
       alert(`Failed to load email details: ${err.message}`);
     }
 
@@ -174,17 +185,18 @@ const App = () => {
   };
 
   const handleResetFilters = () => {
-    setThreatTypeFilter('');
-    setClassifierFilter('');
-    setTaxonomyFilter('');
+    setThreatTypeFilter("");
+    setClassifierFilter("");
+    setTaxonomyFilter("");
     setCurrentPage(1);
     fetchEmails(1, pageSize);
   };
 
-  const hasActiveFilters = threatTypeFilter || classifierFilter || taxonomyFilter;
+  const hasActiveFilters =
+    threatTypeFilter || classifierFilter || taxonomyFilter;
 
   // Client-side search filter
-  const filteredEmails = emails.filter(email => {
+  const filteredEmails = emails.filter((email) => {
     if (!searchQuery) return true;
     const q = searchQuery.toLowerCase();
     return (
@@ -217,7 +229,10 @@ const App = () => {
                 className="w-full px-4 py-2 pr-10 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                 aria-label="Search emails"
               />
-              <Search className="absolute right-3 top-2.5 text-gray-400" size={20} />
+              <Search
+                className="absolute right-3 top-2.5 text-gray-400"
+                size={20}
+              />
             </div>
 
             <select
@@ -235,8 +250,8 @@ const App = () => {
               onClick={() => setShowFilters(!showFilters)}
               className={`p-2 border rounded transition-colors ${
                 hasActiveFilters
-                  ? 'bg-blue-50 border-blue-300 text-blue-600'
-                  : 'bg-white border-gray-300 text-gray-600 hover:bg-gray-50'
+                  ? "bg-blue-50 border-blue-300 text-blue-600"
+                  : "bg-white border-gray-300 text-gray-600 hover:bg-gray-50"
               }`}
               title="Toggle filters"
               aria-label="Toggle filters"
@@ -251,7 +266,12 @@ const App = () => {
               title="Refresh emails"
               aria-label="Refresh emails"
             >
-              <RefreshCw size={20} className={loading ? 'animate-spin text-blue-600' : 'text-gray-600'} />
+              <RefreshCw
+                size={20}
+                className={
+                  loading ? "animate-spin text-blue-600" : "text-gray-600"
+                }
+              />
             </button>
           </div>
 
@@ -283,14 +303,14 @@ const App = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {threatTypes.map(type => (
+                    {threatTypes.map((type) => (
                       <button
                         key={type}
                         onClick={() => setThreatTypeFilter(type)}
                         className={`px-3 py-1 rounded text-sm transition-colors ${
                           threatTypeFilter === type
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            ? "bg-blue-600 text-white"
+                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                         }`}
                       >
                         {type}
@@ -312,14 +332,14 @@ const App = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {classifiers.map(c => (
+                    {classifiers.map((c) => (
                       <button
                         key={c}
                         onClick={() => setClassifierFilter(c)}
                         className={`px-3 py-1 rounded text-sm transition-colors ${
                           classifierFilter === c
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            ? "bg-blue-600 text-white"
+                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                         }`}
                       >
                         {c}
@@ -341,14 +361,14 @@ const App = () => {
                     className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <div className="mt-2 flex flex-wrap gap-2">
-                    {taxonomies.map(t => (
+                    {taxonomies.map((t) => (
                       <button
                         key={t}
                         onClick={() => setTaxonomyFilter(t)}
                         className={`px-3 py-1 rounded text-sm transition-colors ${
                           taxonomyFilter === t
-                            ? 'bg-blue-600 text-white'
-                            : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            ? "bg-blue-600 text-white"
+                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
                         }`}
                       >
                         {t}
@@ -376,7 +396,9 @@ const App = () => {
                 {/* Active Filter Badges */}
                 {hasActiveFilters && (
                   <div className="pt-4 border-t border-gray-200">
-                    <div className="text-sm font-medium text-gray-700 mb-2">Active Filters:</div>
+                    <div className="text-sm font-medium text-gray-700 mb-2">
+                      Active Filters:
+                    </div>
                     <div className="flex flex-wrap gap-2">
                       {threatTypeFilter && (
                         <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
@@ -413,18 +435,23 @@ const App = () => {
         )}
 
         <div className="space-y-2">
-          {!loading && !error && filteredEmails.map((email) => (
-            <EmailListItem
-              key={email.id}
-              email={email}
-              onClick={handleEmailClick}
-            />
-          ))}
+          {!loading &&
+            !error &&
+            filteredEmails.map((email) => (
+              <EmailListItem
+                key={email.id}
+                email={email}
+                onClick={handleEmailClick}
+              />
+            ))}
         </div>
 
         {!loading && !error && emails.length > 0 && (
           <>
-            <StatisticsFooter emails={filteredEmails} totalEmails={totalCount} />
+            <StatisticsFooter
+              emails={filteredEmails}
+              totalEmails={totalCount}
+            />
             {totalPages > 1 && (
               <Pagination
                 currentPage={currentPage}

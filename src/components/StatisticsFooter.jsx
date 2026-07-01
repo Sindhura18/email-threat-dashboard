@@ -1,8 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const StatisticsFooter = ({ emails, totalEmails }) => {
-  const threatCount = emails.filter(e => e.threat_type && e.threat_type !== 'CL').length;
-  const cleanCount = emails.filter(e => e.threat_type === 'CL').length;
+  const threatCount = emails.filter(
+    (e) => e.threat_type && e.threat_type !== "CL",
+  ).length;
+  const cleanCount = emails.filter((e) => e.threat_type === "CL").length;
 
   return (
     <div className="mt-6 bg-white border border-gray-200 rounded-lg px-6 py-4">
