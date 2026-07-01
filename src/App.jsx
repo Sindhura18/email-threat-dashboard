@@ -7,6 +7,7 @@ import { LoadingState, ErrorState, EmptyState } from "./utils/uiStates";
 import StatisticsFooter from "./components/StatisticsFooter";
 import Pagination from "./components/Pagination";
 import { mockEmails } from "./data/mockData";
+import { getThreatTypeLabel } from "./utils/helpers";
 
 // Toggle this to switch between mock data and real API
 const USE_MOCK_DATA = true;
@@ -168,11 +169,6 @@ const App = () => {
     fetchEmails(1, newSize);
   };
 
-  const handleApplyFilters = () => {
-    setCurrentPage(1);
-    fetchEmails(1, pageSize);
-  };
-
   const handleResetFilters = () => {
     setThreatTypeFilter("");
     setClassifierFilter("");
@@ -265,148 +261,129 @@ const App = () => {
 
           {/* Filter Panel */}
           {showFilters && (
-            <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-                <button
-                  onClick={() => setShowFilters(false)}
-                  className="p-1 hover:bg-gray-200 rounded transition-colors"
-                  aria-label="Close filters"
-                >
-                  <X size={20} />
-                </button>
-              </div>
-
-              <div className="space-y-4">
-                {/* Threat Type Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Threat Type Contains:
-                  </label>
-                  <input
-                    type="text"
-                    value={threatTypeFilter}
-                    onChange={(e) => setThreatTypeFilter(e.target.value)}
-                    placeholder="e.g., SP, PH, MA"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {threatTypes.map((type) => (
-                      <button
-                        key={type}
-                        onClick={() => setThreatTypeFilter(type)}
-                        className={`px-3 py-1 rounded text-sm transition-colors ${
-                          threatTypeFilter === type
-                            ? "bg-blue-600 text-white"
-                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {type}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Classifier Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Classifier Contains:
-                  </label>
-                  <input
-                    type="text"
-                    value={classifierFilter}
-                    onChange={(e) => setClassifierFilter(e.target.value)}
-                    placeholder="e.g., content_intent_attack"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {classifiers.map((c) => (
-                      <button
-                        key={c}
-                        onClick={() => setClassifierFilter(c)}
-                        className={`px-3 py-1 rounded text-sm transition-colors ${
-                          classifierFilter === c
-                            ? "bg-blue-600 text-white"
-                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {c}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Taxonomy Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Taxonomy Contains:
-                  </label>
-                  <input
-                    type="text"
-                    value={taxonomyFilter}
-                    onChange={(e) => setTaxonomyFilter(e.target.value)}
-                    placeholder="e.g., spam, phishing"
-                    className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {taxonomies.map((t) => (
-                      <button
-                        key={t}
-                        onClick={() => setTaxonomyFilter(t)}
-                        className={`px-3 py-1 rounded text-sm transition-colors ${
-                          taxonomyFilter === t
-                            ? "bg-blue-600 text-white"
-                            : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {t}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Filter Action Buttons */}
-                <div className="flex items-center gap-3 pt-4 border-t border-gray-200">
-                  <button
-                    onClick={handleApplyFilters}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors font-medium"
-                  >
-                    Submit
-                  </button>
+            <div className="mt-3 p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">
+                  Filter by
+                </span>
+                {hasActiveFilters && (
                   <button
                     onClick={handleResetFilters}
-                    className="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition-colors"
+                    className="text-xs text-blue-600 hover:text-blue-800 font-medium transition-colors"
                   >
-                    Reset
+                    Clear all
                   </button>
-                </div>
-
-                {/* Active Filter Badges */}
-                {hasActiveFilters && (
-                  <div className="pt-4 border-t border-gray-200">
-                    <div className="text-sm font-medium text-gray-700 mb-2">
-                      Active Filters:
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {threatTypeFilter && (
-                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                          Threat Type: {threatTypeFilter}
-                        </span>
-                      )}
-                      {classifierFilter && (
-                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                          Classifier: {classifierFilter}
-                        </span>
-                      )}
-                      {taxonomyFilter && (
-                        <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm">
-                          Taxonomy: {taxonomyFilter}
-                        </span>
-                      )}
-                    </div>
-                  </div>
                 )}
               </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {/* Threat Type */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+                    Threat Type
+                  </label>
+                  <select
+                    value={threatTypeFilter}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setThreatTypeFilter(val);
+                      fetchEmails(1, pageSize, val, classifierFilter, taxonomyFilter);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  >
+                    <option value="">All Types</option>
+                    {threatTypes.map((t) => (
+                      <option key={t} value={t}>
+                        {t} — {getThreatTypeLabel(t)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Classifier */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+                    Classifier
+                  </label>
+                  <select
+                    value={classifierFilter}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setClassifierFilter(val);
+                      fetchEmails(1, pageSize, threatTypeFilter, val, taxonomyFilter);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  >
+                    <option value="">All Classifiers</option>
+                    {classifiers.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Taxonomy */}
+                <div>
+                  <label className="block text-xs font-medium text-gray-400 uppercase tracking-wide mb-1">
+                    Taxonomy
+                  </label>
+                  <select
+                    value={taxonomyFilter}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setTaxonomyFilter(val);
+                      fetchEmails(1, pageSize, threatTypeFilter, classifierFilter, val);
+                    }}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  >
+                    <option value="">All Taxonomies</option>
+                    {taxonomies.map((t) => (
+                      <option key={t} value={t}>{t}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Active filter chips */}
+              {hasActiveFilters && (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {threatTypeFilter && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-xs font-medium">
+                      {getThreatTypeLabel(threatTypeFilter)}
+                      <button
+                        onClick={() => { setThreatTypeFilter(""); fetchEmails(1, pageSize, "", classifierFilter, taxonomyFilter); }}
+                        className="text-blue-400 hover:text-blue-700 leading-none"
+                        aria-label="Remove threat type filter"
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  )}
+                  {classifierFilter && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-xs font-medium">
+                      {classifierFilter}
+                      <button
+                        onClick={() => { setClassifierFilter(""); fetchEmails(1, pageSize, threatTypeFilter, "", taxonomyFilter); }}
+                        className="text-blue-400 hover:text-blue-700 leading-none"
+                        aria-label="Remove classifier filter"
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  )}
+                  {taxonomyFilter && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 text-blue-700 border border-blue-200 rounded-full text-xs font-medium">
+                      {taxonomyFilter}
+                      <button
+                        onClick={() => { setTaxonomyFilter(""); fetchEmails(1, pageSize, threatTypeFilter, classifierFilter, ""); }}
+                        className="text-blue-400 hover:text-blue-700 leading-none"
+                        aria-label="Remove taxonomy filter"
+                      >
+                        <X size={12} />
+                      </button>
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </div>
