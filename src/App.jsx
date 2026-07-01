@@ -416,7 +416,6 @@ const App = () => {
         {!loading && !error && emails.length > 0 && (
           <>
             <StatisticsFooter
-              emails={filteredEmails}
               totalEmails={totalCount}
               currentPage={currentPage}
               pageSize={pageSize}
